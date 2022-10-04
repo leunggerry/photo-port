@@ -1,36 +1,45 @@
 import React from "react";
-//import some react testing functions lib
 import { render, cleanup } from "@testing-library/react";
-// render - renders the component
-// cleanup - removes the components from the DOM to prevent memory leaks
-
-// jest-dom offers access to custom matchers for testing DOM elements
 import "@testing-library/jest-dom/extend-expect";
+import Nav from "..";
 
-import About from "..";
-
-/**
- * Pre/Post Tests
- *
- * @description: each test we won't have leftover memory data that can give false results
- */
 afterEach(cleanup);
 
-describe("About component", () => {
-  //renders About test
-
-  //First Test - it() or test() can be used
-  it("renders", () => {
-    render(<About />);
+describe("Nav component", () => {
+  //baseline test
+  test("renders", () => {
+    render(<Nav />);
   });
 
-  //Second Test
-  test("matches snapshot DOM node structure", () => {
-    //render about
-    const { asFragment } = render(<About />);
-
-    //compare whether expected ad actual outcoemes match
+  //snapshot test
+  it("matches snapshot", () => {
+    const { asFragment } = render(<Nav />);
+    // assert value comparison
     expect(asFragment()).toMatchSnapshot();
-    //index.test.js.snap is created in the __snapshots__
+  });
+});
+
+//second suite to better organzie test
+describe("emoji is visible", () => {
+  it("inserts emoji into h2", () => {
+    //arrange
+    // getByLabelText mehtod
+    const { getByLabelText } = render(<Nav />);
+    //assert
+    expect(getByLabelText("camera")).toHaveTextContent("📸");
+  });
+});
+
+// test for link visibility
+
+describe("links are visible", () => {
+  it("inserts text into the links", () => {
+    // Arrange
+    //getByTestId is similar to getElementById
+    // data-testid attribute specific for testing purposes instead of using id
+    const { getByTestId } = render(<Nav />);
+    // Assert
+    expect(getByTestId("link")).toHaveTextContent("Oh Snap!");
+    expect(getByTestId("about")).toHaveTextContent("About Me");
   });
 });
