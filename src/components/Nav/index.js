@@ -4,7 +4,13 @@ import { capitalizeFirstLetter } from "../../utils/helpers";
 
 // Component Dfinition
 function Nav(props) {
-  const { categories = [], setCurrentCategory, currentCategory } = props; // destructure the props
+  const {
+    categories = [],
+    setCurrentCategory,
+    currentCategory,
+    contactSelected,
+    setContactSelected,
+  } = props; // destructure the props
 
   //useEffic - a hook to trigger  a re-render on a variable value change. Difference to useState is
   //          its an API that reflectst he lifecycle methods of the component
@@ -29,17 +35,19 @@ function Nav(props) {
       <nav>
         <ul className="flex-row">
           <li className="mx-2">
-            <a data-testid="about" href="#about">
+            <a data-testid="about" href="#about" onClick={() => setContactSelected(false)}>
               About me
             </a>
           </li>
-          <li>
-            <span>Contact</span>
+          <li className={`mx-2 ${contactSelected && `navActive`}`}>
+            <span onClick={() => setContactSelected(true)}>Contact</span>
           </li>
           {categories.map((category) => (
             <li
               /** if the currentCategory name is equal the category name reutnr 'navAcitve' */
-              className={`mx-1 ${currentCategory.name === category.name && "navActive"}`}
+              className={`mx-1 ${
+                currentCategory.name === category.name && !contactSelected && `navActive`
+              }`}
               key={category.name}
             >
               {/* WHY???? 
@@ -47,7 +55,12 @@ function Nav(props) {
                   important that we wrap it in a function declaration rather than just calling
                   categorySelected(category.name), which would cause the function to get called 
                   whenever the component renders as well.*/}
-              <span onClick={() => setCurrentCategory(category.name)}>
+              <span
+                onClick={() => {
+                  setCurrentCategory(category.name);
+                  setContactSelected(false);
+                }}
+              >
                 {capitalizeFirstLetter(category.name)}
               </span>
             </li>
