@@ -1,5 +1,5 @@
 import React from "react";
-import { render, cleanup } from "@testing-library/react";
+import { render, cleanup, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import Nav from "..";
 
@@ -24,9 +24,9 @@ describe("emoji is visible", () => {
   it("inserts emoji into h2", () => {
     //arrange
     // getByLabelText mehtod
-    const { getByLabelText } = render(<Nav />);
+    render(<Nav />);
     //assert
-    expect(getByLabelText("camera")).toHaveTextContent("📸");
+    expect(screen.getByLabelText("camera")).toHaveTextContent("📸");
   });
 });
 
@@ -37,9 +37,9 @@ describe("links are visible", () => {
     // Arrange
     //getByTestId is similar to getElementById
     // data-testid attribute specific for testing purposes instead of using id
-    const { getByTestId } = render(<Nav />);
+    render(<Nav />);
     // Assert
-    expect(getByTestId("link")).toHaveTextContent("Oh Snap!");
-    expect(getByTestId("about")).toHaveTextContent("About Me");
+    expect(screen.getByTestId("about")).toHaveTextContent("About Me");
+    expect(screen.getByTestId("link")).toHaveTextContent("Oh Snap!");
   });
 });

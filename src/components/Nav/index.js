@@ -19,18 +19,19 @@ function Nav(props) {
   return (
     <header>
       <h2>
-        <a href="/">
+        <a data-testid="link" href="/">
           <span role="img" aria-label="camera">
-            {" "}
             📸
-          </span>{" "}
+          </span>
           Oh Snap!
         </a>
       </h2>
       <nav>
         <ul className="flex-row">
           <li className="mx-2">
-            <a href="#about">About me</a>
+            <a data-testid="about" href="#about">
+              About me
+            </a>
           </li>
           <li>
             <span>Contact</span>
