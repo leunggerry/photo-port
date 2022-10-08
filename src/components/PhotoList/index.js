@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import Modal from "../Modal";
 
 function PhotoList({ category }) {
+  // to conditionally render the modal based on whether an image has been clicked
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   //name, category, and description of each photo
   const [photos] = useState([
     {
@@ -105,14 +109,25 @@ function PhotoList({ category }) {
   // the array and assigned to currentPhotos
   const currentPhotos = photos.filter((photo) => photo.category === category);
 
+  const [currentPhoto, setCurrentPhoto] = useState();
+
+  const toggleModal = (image, i) => {
+    //current photo
+    setCurrentPhoto({ ...image, index: i });
+    setIsModalOpen(true);
+  };
+
   return (
     <div>
+      {/* Render the modal if isModalOpen is set to true */}
+      {isModalOpen && <Modal currentPhoto={currentPhoto} />}
       <div className="flex-row">
         {currentPhotos.map((image, i) => (
           <img
             src={require(`../../assets/small/${category}/${i}.jpg`)}
             alt={image.name}
             className="img-thumbnail mx-1"
+            onClick={() => toggleModal(image, i)}
             key={image.name}
           />
         ))}
