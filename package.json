@@ -1,8 +1,8 @@
 {
+  "homepage": "http://leunggerry.github.io/photo-port",
   "name": "photo-port",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://leunggerry.github.io/photo-port",
   "dependencies": {
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^13.4.6",
